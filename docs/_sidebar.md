@@ -1,2 +1,2 @@
 * [首页](/)
-* [SPEC](spec/)
+* [SPEC](spec/ "系統spec")
