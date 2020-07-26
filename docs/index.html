@@ -9,29 +9,47 @@
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
 </head>
 
 <body>
   <div id="app"></div>
   <script>
-    window.$docsify = {
-      name: '系統文件',
-      repo: '',
-      loadSidebar: true,
-      coverpage: true,
-      // 自動到 top
-      auto2top: true,
-      search: {
-        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
-        placeholder: 'Type to search',
-        noData: '找不到結果',
-        depth: 2
-      },
-      requestHeaders:{
-        'cache-control':'no-cache' 
+  var num = 0;
+  // 主題色 default、forest、dark、neutral
+  // CSS 細部調整 themeCSS:".node rect { fill: yellow; }"
+  mermaid.initialize({ startOnLoad: false,theme: 'neutral'});
+  window.$docsify = {
+    name: '系統文件',
+    repo: '',
+    loadSidebar: true,
+    coverpage: true,
+    // 自動到 top
+    auto2top: true,
+    search: {
+      maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+      placeholder: 'Type to search',
+      noData: '找不到結果',
+      depth: 2
+    },
+    requestHeaders: {
+      'cache-control': 'no-cache'
+    },
+    markdown: {
+      renderer: {
+        code: function (code, lang) {
+          if (lang === "mermaid") {
+            return (
+              '<div class="mermaid">' + mermaid.render('mermaid-svg-' + num++, code) + "</div>"
+            );
+          }
+          return this.origin.code.apply(this, arguments);
+        }
       }
-      
     }
+  }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
