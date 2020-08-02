@@ -1,4 +1,53 @@
 # 系統 SPEC
+## 關聯表
+```graphviz
+digraph hierarchy {
+  # 起始與結尾
+  start [label="開始"]
+  end [label="結束"]
+
+  # 過程
+  node[shape=box]
+  a [label="a",shape=diamond]
+  b [label="b"]
+  c [label="c"]
+
+  # 連線邏輯
+  start->a
+  a->b [label="a至b的描述"]
+  a->c [label="a至c的描述"]
+  c->end
+}
+```
+
+
+```graphviz
+digraph hierarchy {
+  rankdir=LR;
+  node [ shape=record ];
+
+  order [label="資料表: 訂單 |
+      <id>id 單號 |
+      <created_at>created_at 建立日期 |
+      <creater>creater 建立人 |
+      <order_details>order_details 訂單細節 "];
+  
+   member [label="資料表: 會員 |
+      <id>id 單號"];
+
+   order_details [label="資料表: 訂單細節 |
+      <id>id 單號 |
+      <order_id>order_id 訂單單號 |
+      <quantity>quantity 數量 |
+      <price>price 價格 |
+      <product_id>product_id 產品 "];
+
+   order:creater->member:id
+   order:order_details->order_details:id[label="1..n"]
+
+}
+```
+
 ## 甘特圖
 ```mermaid
 gantt
